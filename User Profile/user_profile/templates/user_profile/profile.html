@@ -1,0 +1,56 @@
+Welcome {{ user.username }}
+
+{% if message %}
+{{ message }}
+{% endif %}
+<br>
+<a href="{% url 'user_profile:logout' %}">Logout</a>
+<br>
+<br>
+{% if user.is_authenticated and not backends.associated %}
+<a href="../password_reset/">Change Password</a>
+
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    {% if user.is_authenticated and not backends.associated %}
+    <label for="UserName"> UserName:</label>
+
+    <input type="text" class="form-control" name="UserName" id="UserName" value="{{ user.username }}">
+    <br><br>
+    {{ else }}
+
+    <label for="Email"> Email:</label>
+    <input type="text" class="form-control" name="Email" id="Email" value="{{ user.email }}">
+    <br><br>
+    {% endif %}
+
+    <label for="Phone">Phone No:(+91 no format)</label>
+    <input type="text" class="form-control" name="Phone" id="Phone" value="{{ user.phone|default_if_none:'' }}">
+    <br><br>
+
+
+    <label for="Address">Address:</label>
+    <input type="text" class="form-control" id="Address" name="Address" value="{{ user.address|default_if_none:'' }}">
+    <br><br>
+
+    <label for="City">City:</label>
+    <input type="text" class="form-control" name="City" id="City" value="{{ user.city|default_if_none:'' }}">
+    <br><br>
+
+    <label for="State">State:</label>
+    <input type="text" class="form-control" name="State" id="State" value="{{ user.state|default_if_none:'' }}">
+    <br><br>
+    <label for="Country">Country:</label>
+    <input type="text" class="form-control" name="Country" id="Country" value="{{ user.country|default_if_none:'' }}">
+    <br><br>
+
+    <label for="Pincode">Pincode:</label>
+    <input type="text" class="form-control" name="Pincode" id="Pincode" value="{{ user.pincode|default_if_none:'' }}">
+    <br><br>
+
+
+<button type="submit" class="btn btn-default">Update Profile</button>
+
+</form>
